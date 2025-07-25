@@ -23,8 +23,11 @@ class WebCrawler:
             for link in soup.find_all('a'):
                 href = link.get('href')
                 if href:
-                    if urlparse(href).netloc:
-                        href = urljoin(base_url or url, href)
+                    # Convert relative URLs to absolute
+                    href = urljoin(base_url or url, href)
+                    # Only crawl links within the same domain
+                    if urlparse(href).netloc == urlparse(base_url or url).netloc:
+                        self.crawl(href, base_url=base_url or url)
                     if not href.startswith(base_url or url):
                         self.crawl(href, base_url=base_url or url)
         except Exception as e:
