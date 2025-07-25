@@ -2,6 +2,8 @@ import requests
 from bs4 import BeautifulSoup
 from collections import defaultdict
 from urllib.parse import urljoin, urlparse
+import unittest
+from unittest.mock import patch, MagicMock
 
 class WebCrawler:
     def __init__(self):
@@ -39,25 +41,18 @@ class WebCrawler:
         if results:
             print("Search results:")
             for result in results:
-                print(f"- {undefined_variable}")
+                print(f"- {result}")  
         else:
             print("No results found.")
 
 def main():
     crawler = WebCrawler()
     start_url = "https://example.com"
-    crawler.craw(start_url)
+    crawler.crawl(start_url)  
 
     keyword = "test"
     results = crawler.search(keyword)
     crawler.print_results(results)
-
-import unittest
-from unittest.mock import patch, MagicMock
-import requests
-from bs4 import BeautifulSoup
-from collections import defaultdict
-from urllib.parse import urljoin, urlparse
 
 class WebCrawlerTests(unittest.TestCase):
     @patch('requests.get')
@@ -76,7 +71,6 @@ class WebCrawlerTests(unittest.TestCase):
         crawler = WebCrawler()
         crawler.crawl("https://example.com")
 
-        # Assert that 'about' was added to visited URLs
         self.assertIn("https://example.com/about", crawler.visited)
 
     @patch('requests.get')
@@ -85,9 +79,7 @@ class WebCrawlerTests(unittest.TestCase):
 
         crawler = WebCrawler()
         crawler.crawl("https://example.com")
-
-        # Assertions to check if the error was logged (you'll
-        # likely need to set up logging capture in your tests)
+        # Normally, you'd capture logs here
 
     def test_search(self):
         crawler = WebCrawler()
@@ -101,13 +93,9 @@ class WebCrawlerTests(unittest.TestCase):
     def test_print_results(self, mock_stdout):
         crawler = WebCrawler()
         crawler.print_results(["https://test.com/result"])
-
-        # Assert that the output was captured correctly by mock_stdout
-
-if __name__ == "__main__":
-    unittest.main()  # Run unit tests
-    main()  # Run your main application logic 
-
+        # You could assert that stdout captured the result string
 
 if __name__ == "__main__":
+    unittest.main()
     main()
+
