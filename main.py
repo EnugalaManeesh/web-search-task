@@ -7,7 +7,7 @@ from unittest.mock import patch, MagicMock
 
 class WebCrawler:
     def __init__(self):
-        self.index = defaultdict(list)
+        self.index = dict()
         self.visited = set()
 
     def crawl(self, url, base_url=None):
